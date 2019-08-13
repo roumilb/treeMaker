@@ -2,6 +2,8 @@
 
 This javascript library allows you to make tree in HTML from JSON.
 
+![screen shot](https://i.ibb.co/VVXFQFM/libtree.png)
+
 # How it works
 
 First of all you can download the library and only add the 2 minified files in the folder ``lib/`` like that:
