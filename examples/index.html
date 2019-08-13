@@ -3,25 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Tree maker 🌳</title>
-    <link rel="stylesheet" href="../style/library.css">
-    <script type="text/javascript" src="../src/index.js"></script>
+    <link rel="stylesheet" href="../lib/tree_maker-min.css">
+    <script type="text/javascript" src="../lib/tree_maker-min.js"></script>
 </head>
 <body>
 <div id="my_tree"></div>
 <script type="text/javascript">
     let tree = {
         1: {
-            2: {
-                4: {
-                    5: '',
-                    7: '',
-                    8: '',
-                    9: ''
-                }
-            },
+            2: '',
             3: '',
-            6: '',
-            10: ''
+            4: '',
+            5: ''
         },
     };
 
@@ -31,8 +24,6 @@
         3: {trad: 'Card 3'},
         4: {trad: 'Card 4'},
         5: {trad: 'Card 5'},
-        6: {trad: 'Card 6'},
-        7: {trad: 'Card 7'},
     };
 
     treeMaker(tree, {
