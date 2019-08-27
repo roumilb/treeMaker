@@ -71,6 +71,12 @@ This function takes 2 arguments: the tree in JSON and parameters which is an obj
 | ``link_width:`` | no | The width of the svg that linked the cards |
 | ``link_color:`` | no | The color of the svg that linked the cards |
 
+# Working on
+
+- [ ] Make the tree editable (add and remove card)
+- [ ] Allow people to create types and then assign them to card
+- [ ] Allow drag and drop in the editor
+
 # License
 
 This library is available under the MIT license
