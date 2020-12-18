@@ -2,7 +2,7 @@ let pathNumber = 1;
 let allLinks = [];
 let treeParamas;
 
-//scg path params
+// scg path params
 let strokeWidth = '5px';
 let strokeColor = '#000000';
 
@@ -13,7 +13,11 @@ function treeMaker(tree, params) {
     if (params.link_width !== undefined) strokeWidth = params.link_width;
     if (params.link_color !== undefined) strokeColor = params.link_color;
 
-    //svg part
+    // reset pathNumber and allLinks globals to allow on-click function to re-call treeMaker()
+    pathNumber = 1;
+    allLinks = [];
+
+    // svg part
     let svgDiv = document.createElement('div');
     svgDiv.id = 'tree__svg-container';
     container.appendChild(svgDiv);
@@ -21,7 +25,7 @@ function treeMaker(tree, params) {
     svgContainer.id = 'tree__svg-container__svg';
     svgDiv.appendChild(svgContainer);
 
-    //html part
+    // html part
     let treeContainer = document.createElement('div');
     treeContainer.id = 'tree__container';
     container.appendChild(treeContainer);
@@ -42,7 +46,7 @@ function treeMaker(tree, params) {
     for (let i = 0; allCards.length > i; i++) {
         allCards[i].addEventListener('click', function (event) {
             params.card_click(event.target);
-        })
+        });
     }
 
     window.onresize = function () {
@@ -53,7 +57,7 @@ function treeMaker(tree, params) {
 }
 
 function connectCard() {
-    //magic
+    // magic
     let svg = document.getElementById('tree__svg-container__svg');
     for (let i = 0; allLinks.length > i; i++) {
         connectElements(svg, document.getElementById(allLinks[i][0]), document.getElementById(allLinks[i][1]), document.getElementById(allLinks[i][2]));
@@ -177,4 +181,3 @@ function connectElements(svg, path, startElem, endElem) {
     // call function for drawing the path
     drawPath(svg, path, startX, startY, endX, endY);
 }
-
