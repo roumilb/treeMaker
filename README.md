@@ -20,7 +20,7 @@ Add a div to your page where you want your tree:
 Then add this javascript code
 ````javascript
 //The structure of your tree
-let tree = {
+const tree = {
         key_1: {
             key_2: '',
             key_3: '',
@@ -30,7 +30,7 @@ let tree = {
     };
 
 //The parameters of your tree
-let treeParams = {
+const params = {
     key_1: {trad: 'Card 1', styles: {'box-shadow': '0 0 15px 2px blue'}},
     key_2: {trad: 'Card 2', styles: {'color': 'red'}},
     key_3: {trad: 'Card 3'},
@@ -43,7 +43,7 @@ treeMaker(tree, {
     id: 'my_tree', card_click: function (element) {
         console.log(element);
     },
-    treeParams: treeParams,
+    treeParams: params,
     'link_width': '4px',
     'link_color': '#ff5259',
 });
@@ -70,12 +70,6 @@ This function takes 2 arguments: the tree in JSON and parameters which is an obj
 | ``treeParams:`` | yes | An object which contains the options for the tree card |
 | ``link_width:`` | no | The width of the svg that linked the cards |
 | ``link_color:`` | no | The color of the svg that linked the cards |
-
-# Working on
-
-- [ ] Make the tree editable (add and remove card)
-- [ ] Allow people to create types and then assign them to card
-- [ ] Allow drag and drop in the editor
 
 # License
 
