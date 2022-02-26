@@ -1,6 +1,6 @@
 let pathNumber = 1;
 let allLinks = [];
-let treeParamas;
+let treeParams;
 
 // scg path params
 let strokeWidth = '5px';
@@ -8,7 +8,7 @@ let strokeColor = '#000000';
 
 function treeMaker(tree, params) {
     let container = document.getElementById(params.id);
-    treeParamas = params.treeParams === undefined ? {} : params.treeParams;
+    treeParams = params.treeParams === undefined ? {} : params.treeParams;
 
     if (params.link_width !== undefined) strokeWidth = params.link_width;
     if (params.link_color !== undefined) strokeColor = params.link_color;
@@ -18,36 +18,38 @@ function treeMaker(tree, params) {
     allLinks = [];
 
     // svg part
-    let svgDiv = document.createElement('div');
+    const svgDiv = document.createElement('div');
     svgDiv.id = 'tree__svg-container';
     container.appendChild(svgDiv);
-    let svgContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const svgContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svgContainer.id = 'tree__svg-container__svg';
     svgDiv.appendChild(svgContainer);
 
     // html part
-    let treeContainer = document.createElement('div');
+    const treeContainer = document.createElement('div');
     treeContainer.id = 'tree__container';
     container.appendChild(treeContainer);
-    let card = document.createElement('div');
+    const card = document.createElement('div');
     card.classList = 'tree__container__step__card';
     card.id = 'tree__container__step__card__first';
     treeContainer.appendChild(card);
-    let trad = treeParamas[Object.keys(tree)[0]] !== undefined && treeParamas[Object.keys(tree)[0]].trad !== undefined ? treeParamas[Object.keys(tree)[0]].trad : Object.keys(tree)[0].trad;
-    card.innerHTML = '<p class="tree__container__step__card__p" id="card_' + Object.keys(tree)[0] + '">' + trad + '</p>';
+    const trad = treeParams[Object.keys(tree)[0]] !== undefined && treeParams[Object.keys(tree)[0]].trad !== undefined ? treeParams[Object.keys(tree)[0]].trad : Object.keys(tree)[0].trad;
+    card.innerHTML = `<p class="tree__container__step__card__p" id="card_${Object.keys(tree)[0]}">${trad}</p>`;
 
-    addStyleToCard(treeParamas[Object.keys(tree)[0]], Object.keys(tree)[0]);
+    addStyleToCard(treeParams[Object.keys(tree)[0]], Object.keys(tree)[0]);
 
     iterate(tree[Object.keys(tree)[0]], true, 'tree__container__step__card__first');
 
     connectCard();
 
-    let allCards = document.querySelectorAll('.tree__container__step__card__p');
-    for (let i = 0; allCards.length > i; i++) {
-        allCards[i].addEventListener('click', function (event) {
-            params.card_click(event.target);
+    const allCards = document.querySelectorAll('.tree__container__step__card__p');
+    allCards.forEach((card) => {
+        card.addEventListener('click', function (event) {
+            if (typeof params.card_click === 'function'){
+                params.card_click(event.target);
+            }
         });
-    }
+    })
 
     window.onresize = function () {
         svgDiv.setAttribute('height', '0');
@@ -58,44 +60,34 @@ function treeMaker(tree, params) {
 
 function connectCard() {
     // magic
-    let svg = document.getElementById('tree__svg-container__svg');
+    const svg = document.getElementById('tree__svg-container__svg');
     for (let i = 0; allLinks.length > i; i++) {
         connectElements(svg, document.getElementById(allLinks[i][0]), document.getElementById(allLinks[i][1]), document.getElementById(allLinks[i][2]));
     }
 }
 
-function iterate(tree, start = false, from = '') {
-    let svgContainer = document.getElementById('tree__svg-container__svg');
-    let treeContainer = document.createElement('div');
-    treeContainer.id = 'from_' + from;
-    treeContainer.classList.add('tree__container__branch');
+function iterate(tree, start, from) {
+    const svgContainer = document.getElementById('tree__svg-container__svg');
+    const treeContainer = document.createElement('div');
+    treeContainer.classList.add('tree__container__branch', `from_${from}`);
     document.getElementById(from).after(treeContainer);
 
     for (const key in tree) {
+        const textCard = treeParams[key] !== undefined && treeParams[key].trad !== undefined ? treeParams[key].trad : key;
 
-        let textCard = treeParamas[key] !== undefined && treeParamas[key].trad !== undefined ? treeParamas[key].trad : key;
-
-        treeContainer.innerHTML += '<div class="tree__container__step"><div class="tree__container__step__card" id="' + key + '"><p id="card_' + key + '" class="tree__container__step__card__p">' + textCard + '</p></div></div>';
-        addStyleToCard(treeParamas[key], key);
-        if ('' !== from && !start) {
-            let newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            newpath.id = "path" + pathNumber;
-            newpath.setAttribute('stroke', strokeColor);
-            newpath.setAttribute('fill', 'none');
-            newpath.setAttribute('stroke-width', strokeWidth);
-            svgContainer.appendChild(newpath);
-            allLinks.push(['path' + pathNumber, from, key]);
-            pathNumber++;
+        if (!document.getElementById(`card_${key}`)){
+            treeContainer.innerHTML += `<div class="tree__container__step"><div class="tree__container__step__card" id="${key}"><p id="card_${key}" class="tree__container__step__card__p">${textCard}</p></div></div>`;
+            addStyleToCard(treeParams[key], key);
         }
-        if (start) {
-            // svgContainer.innerHTML = svgContainer.innerHTML + '<path id="path' + pathNumber + '" d="M0 0" stroke="#2199e8" fill="none" stroke-width="5";/>';
-            let newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            newpath.id = "path" + pathNumber;
-            newpath.setAttribute('stroke', strokeColor);
-            newpath.setAttribute('fill', 'none');
-            newpath.setAttribute('stroke-width', strokeWidth);
-            svgContainer.appendChild(newpath);
-            allLinks.push(['path' + pathNumber, 'tree__container__step__card__first', key]);
+
+        if ((from && !start) || start){
+            const newPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            newPath.id = "path" + pathNumber;
+            newPath.setAttribute('stroke', strokeColor);
+            newPath.setAttribute('fill', 'none');
+            newPath.setAttribute('stroke-width', strokeWidth);
+            svgContainer.appendChild(newPath);
+            allLinks.push(['path' + pathNumber, from ? from : 'tree__container__step__card__first', key]);
             pathNumber++;
         }
 
@@ -108,7 +100,7 @@ function iterate(tree, start = false, from = '') {
 function addStyleToCard(card, key) {
     if (card !== undefined && card.styles !== undefined) {
         let lastCard = document.getElementById('card_' + key);
-        for (const cssRules in treeParamas[key].styles) {
+        for (const cssRules in treeParams[key].styles) {
             lastCard.style[cssRules] = card.styles[cssRules];
         }
     }
@@ -156,27 +148,27 @@ function drawPath(svg, path, startX, startY, endX, endY) {
 }
 
 function connectElements(svg, path, startElem, endElem) {
-    let svgContainer = document.getElementById('tree__svg-container');
+    const svgContainer = document.getElementById('tree__svg-container');
 
     // if first element is lower than the second, swap!
     if (startElem.offsetTop > endElem.offsetTop) {
-        let temp = startElem;
+        const temp = startElem;
         startElem = endElem;
         endElem = temp;
     }
 
     // get (top, left) corner coordinates of the svg container
-    let svgTop = svgContainer.offsetTop;
-    let svgLeft = svgContainer.offsetLeft;
+    const svgTop = svgContainer.offsetTop;
+    const svgLeft = svgContainer.offsetLeft;
 
     // calculate path's start (x,y)  coords
     // we want the x coordinate to visually result in the element's mid point
-    let startX = startElem.offsetLeft + 0.5 * startElem.offsetWidth - svgLeft;    // x = left offset + 0.5*width - svg's left offset
-    let startY = startElem.offsetTop + startElem.offsetHeight - svgTop;        // y = top offset + height - svg's top offset
+    const startX = startElem.offsetLeft + 0.5 * startElem.offsetWidth - svgLeft;    // x = left offset + 0.5*width - svg's left offset
+    const startY = startElem.offsetTop + startElem.offsetHeight - svgTop;        // y = top offset + height - svg's top offset
 
     // calculate path's end (x,y) coords
-    let endX = endElem.offsetLeft + 0.5 * endElem.offsetWidth - svgLeft;
-    let endY = endElem.offsetTop - svgTop;
+    const endX = endElem.offsetLeft + 0.5 * endElem.offsetWidth - svgLeft;
+    const endY = endElem.offsetTop - svgTop;
 
     // call function for drawing the path
     drawPath(svg, path, startX, startY, endX, endY);

@@ -9,19 +9,32 @@
 <body>
 <div id="my_tree"></div>
 <script type="text/javascript">
+    let nestedTree = {
+        8: '',
+        9: {
+            10: '',
+            11: {
+                13: '',
+            },
+        },
+        12: '',
+    }
+
     let tree = {
         1: {
             2: '',
             3: {
                 6: '',
-                7: '',
+                7: nestedTree,
             },
-            4: '',
+            4: {
+                7: nestedTree,
+            },
             5: ''
         },
     };
 
-    let treeParams = {
+    let params = {
         1: {trad: 'Card 1'},
         2: {trad: 'Card 2'},
         3: {trad: 'Card 3'},
@@ -32,10 +45,11 @@
     };
 
     treeMaker(tree, {
-        id: 'my_tree', card_click: function (element) {
+        id: 'my_tree',
+        card_click: function (element) {
             console.log(element);
         },
-        treeParams: treeParams,
+        treeParams: params,
         'link_width': '4px',
         'link_color': '#2199e8',
     });

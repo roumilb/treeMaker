@@ -34,7 +34,3 @@
     cursor: pointer;
     transition: transform .2s ease;
 }
-
-.tree__container__step__card__p:hover {
-    transform: translateX(3px);
-}
