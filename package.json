@@ -1,5 +1,5 @@
 {
-  "name": "tree-maker",
+  "name": "@roumi/treemaker",
   "version": "1.0.0",
   "description": "This javascript library allows you to make tree in HTML from JSON.",
   "main": "build/tree-maker.js",

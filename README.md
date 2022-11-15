@@ -6,7 +6,7 @@ This javascript library allows you to make tree in HTML from JSON.
 
 # Installation
 
-``npm install --save tree-maker``
+``npm install --save @roumi/treemaker``
 
 # How it works
 
