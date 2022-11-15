@@ -6,7 +6,9 @@ let treeParams;
 let strokeWidth = '5px';
 let strokeColor = '#000000';
 
-function treeMaker(tree, params) {
+import '../style/tree_maker.css';
+
+export default function treeMaker(tree, params) {
     let container = document.getElementById(params.id);
     treeParams = params.treeParams === undefined ? {} : params.treeParams;
 
@@ -99,7 +101,7 @@ function iterate(tree, start, from) {
 
 function addStyleToCard(card, key) {
     if (card !== undefined && card.styles !== undefined) {
-        let lastCard = document.getElementById('card_' + key);
+        const lastCard = document.getElementById('card_' + key);
         for (const cssRules in treeParams[key].styles) {
             lastCard.style[cssRules] = card.styles[cssRules];
         }

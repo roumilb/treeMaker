@@ -4,13 +4,11 @@ This javascript library allows you to make tree in HTML from JSON.
 
 ![screen shot](https://i.ibb.co/VVXFQFM/libtree.png)
 
-# How it works
+# Installation
 
-First of all you can download the library and only add the 2 minified files in the folder ``lib/`` like that:
-```html
-<script type="text/javascript" src="path/to/your/site/index/tree_maker-min.js"></script>
-<link rel="stylesheet" href="path/to/your/site/index/tree_maker-min.css">
-```
+``npm install --save tree-maker``
+
+# How it works
 
 Add a div to your page where you want your tree:
 ````html
@@ -19,6 +17,8 @@ Add a div to your page where you want your tree:
 
 Then add this javascript code
 ````javascript
+import treeMaker from 'tree-maker'
+
 //The structure of your tree
 const tree = {
         key_1: {
