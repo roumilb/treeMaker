@@ -71,6 +71,10 @@ This function takes 2 arguments: the tree in JSON and parameters which is an obj
 | ``link_width:`` | no | The width of the svg that linked the cards |
 | ``link_color:`` | no | The color of the svg that linked the cards |
 
+## Using the inline method
+
+If you want to use the inline method you can download the build folder and then build you html file like the one in examples/index.js
+
 # License
 
 This library is available under the MIT license
