@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Tree maker 🌳</title>
-    <link rel="stylesheet" href="../lib/tree_maker-min.css">
-    <script type="text/javascript" src="../lib/tree_maker-min.js"></script>
+    <link rel="stylesheet" href="../build/main.css">
+    <script type="text/javascript" src="../build/tree-maker.js"></script>
 </head>
 <body>
 <div id="my_tree"></div>
@@ -44,7 +44,7 @@
         7: {trad: 'Card 7'},
     };
 
-    treeMaker(tree, {
+    treeMaker.default(tree, {
         id: 'my_tree',
         card_click: function (element) {
             console.log(element);
