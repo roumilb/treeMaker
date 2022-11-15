@@ -4,7 +4,7 @@
   "description": "This javascript library allows you to make tree in HTML from JSON.",
   "main": "build/tree-maker.js",
   "directories": {
-    "example": "examples",
+    "example": "examples"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
