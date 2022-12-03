@@ -9,7 +9,12 @@ let strokeColor = '#000000';
 import '../style/tree_maker.css';
 
 export default function treeMaker(tree, params) {
-    let container = document.getElementById(params.id);
+    const container = document.getElementById(params.id);
+
+    if (!!container.querySelector('#tree__svg-container')) {
+        container.innerHTML = '';
+    }
+
     treeParams = params.treeParams === undefined ? {} : params.treeParams;
 
     if (params.link_width !== undefined) strokeWidth = params.link_width;

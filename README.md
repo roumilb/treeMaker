@@ -17,7 +17,7 @@ Add a div to your page where you want your tree:
 
 Then add this javascript code
 ````javascript
-import treeMaker from 'tree-maker'
+import treeMaker from '@roumi/treemaker'
 
 //The structure of your tree
 const tree = {

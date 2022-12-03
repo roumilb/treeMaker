@@ -1,8 +1,8 @@
 {
   "name": "@roumi/treemaker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This javascript library allows you to make tree in HTML from JSON.",
-  "main": "build/tree-maker.js",
+  "main": "src/index.js",
   "directories": {
     "example": "examples"
   },
