@@ -1,8 +1,11 @@
 let pathNumber = 1;
 let allLinks = [];
 let treeParams;
+let cardsCountLastRow = 0;
 
-// scg path params
+const CARD_WIDTH_FOR_CONTAINER = 250;
+
+// svg path params
 let strokeWidth = '5px';
 let strokeColor = '#000000';
 
@@ -47,12 +50,14 @@ export default function treeMaker(tree, params) {
 
     iterate(tree[Object.keys(tree)[0]], true, 'tree__container__step__card__first');
 
+    treeContainer.style.width = `${cardsCountLastRow * CARD_WIDTH_FOR_CONTAINER}px`;
+
     connectCard();
 
     const allCards = document.querySelectorAll('.tree__container__step__card__p');
     allCards.forEach((card) => {
         card.addEventListener('click', function (event) {
-            if (typeof params.card_click === 'function'){
+            if (typeof params.card_click === 'function') {
                 params.card_click(event.target);
             }
         });
@@ -82,12 +87,12 @@ function iterate(tree, start, from) {
     for (const key in tree) {
         const textCard = treeParams[key] !== undefined && treeParams[key].trad !== undefined ? treeParams[key].trad : key;
 
-        if (!document.getElementById(`card_${key}`)){
+        if (!document.getElementById(`card_${key}`)) {
             treeContainer.innerHTML += `<div class="tree__container__step"><div class="tree__container__step__card" id="${key}"><p id="card_${key}" class="tree__container__step__card__p">${textCard}</p></div></div>`;
             addStyleToCard(treeParams[key], key);
         }
 
-        if ((from && !start) || start){
+        if ((from && !start) || start) {
             const newPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
             newPath.id = "path" + pathNumber;
             newPath.setAttribute('stroke', strokeColor);
@@ -100,6 +105,8 @@ function iterate(tree, start, from) {
 
         if (Object.keys(tree[key]).length > 0) {
             iterate(tree[key], false, key);
+        } else {
+            cardsCountLastRow++;
         }
     }
 }
@@ -127,16 +134,16 @@ function absolute(x) {
 
 function drawPath(svg, path, startX, startY, endX, endY) {
     // get the path's stroke width (if one wanted to be  really precize, one could use half the stroke size)
-    let stroke = parseFloat(path.getAttribute("stroke-width"));
+    const stroke = parseFloat(path.getAttribute("stroke-width"));
     // check if the svg is big enough to draw the path, if not, set heigh/width
     if (svg.getAttribute("height") < endY) svg.setAttribute("height", endY);
     if (svg.getAttribute("width") < (startX + stroke)) svg.setAttribute("width", (startX + stroke));
     if (svg.getAttribute("width") < (endX + stroke)) svg.setAttribute("width", (endX + stroke));
 
-    let deltaX = (endX - startX) * 0.15;
-    let deltaY = (endY - startY) * 0.15;
+    const deltaX = (endX - startX) * 0.15;
+    const deltaY = (endY - startY) * 0.15;
     // for further calculations which ever is the shortest distance
-    let delta = deltaY < absolute(deltaX)
+    const delta = deltaY < absolute(deltaX)
         ? deltaY
         : absolute(deltaX);
 

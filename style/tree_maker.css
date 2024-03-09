@@ -1,4 +1,4 @@
-.tree__container, #from_tree__container__step__card__first, .tree__container__branch {
+.tree__container__branch {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -25,7 +25,7 @@
 }
 
 .tree__container__step {
-    flex: 1 1 0px;
+    flex: 1 1 0;
     width: auto;
     padding: 0;
 }
